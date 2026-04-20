@@ -194,7 +194,7 @@ def patch_json(cookie_header: str, csrf_token: str, url: str, payload: dict, tim
         raise RobloxUploadError(f"Invalid JSON response from {url}: {error}") from error
 
 
-def resolve_target_game(cookie_header: str, csrf_token: str, timeout_seconds: int, retries: int, place_id: Optional[int]) -> TargetGame:
+def list_owned_games(cookie_header: str, csrf_token: str, timeout_seconds: int, retries: int) -> list[TargetGame]:
     me = get_json(cookie_header, csrf_token, AUTHENTICATED_USER_URL, timeout_seconds, retries)
     user_id = me.get("id")
     if not isinstance(user_id, int):
@@ -219,6 +219,12 @@ def resolve_target_game(cookie_header: str, csrf_token: str, timeout_seconds: in
 
     if not parsed:
         raise RobloxUploadError("Could not parse owned games list")
+
+    return parsed
+
+
+def resolve_target_game(cookie_header: str, csrf_token: str, timeout_seconds: int, retries: int, place_id: Optional[int]) -> TargetGame:
+    parsed = list_owned_games(cookie_header, csrf_token, timeout_seconds, retries)
 
     if place_id is None:
         return parsed[0]
@@ -265,6 +271,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--cookie", type=str, default=None, help="ROBLOSECURITY value (or ROBLOSECURITY env)")
     parser.add_argument("--file", type=Path, default=Path("Place.rbxl"), help="Path to .rbxl/.rbxlx")
     parser.add_argument("--place-id", type=int, default=None, help="Optional place ID. If omitted, latest owned game root place is used")
+    parser.add_argument("--list-games", action="store_true", help="List owned games and exit without uploading")
     parser.add_argument("--no-public", action="store_true", help="Skip the automatic universe visibility update")
     parser.add_argument("--no-open", action="store_true", help="Do not open game link in browser")
     parser.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT_SECONDS)
@@ -283,8 +290,6 @@ def main() -> int:
         return 1
 
     try:
-        ensure_place_file(args.file)
-
         raw_cookie = args.cookie or os.getenv("ROBLOSECURITY")
         if not raw_cookie:
             print("Error: provide cookie via --cookie or ROBLOSECURITY", file=sys.stderr)
@@ -294,6 +299,14 @@ def main() -> int:
         csrf_token, rotated_auth_cookie = get_csrf_token(cookie_header, args.timeout, args.retries)
         if rotated_auth_cookie:
             cookie_header = build_cookie_header(rotated_auth_cookie)
+
+        if args.list_games:
+            games = list_owned_games(cookie_header, csrf_token, args.timeout, args.retries)
+            for game in games:
+                print(f"{game.name}: universe_id={game.universe_id}, place_id={game.place_id}")
+            return 0
+
+        ensure_place_file(args.file)
 
         game = resolve_target_game(cookie_header, csrf_token, args.timeout, args.retries, args.place_id)
         print(f"Target game: {game.name} (universe_id={game.universe_id}, place_id={game.place_id})")
