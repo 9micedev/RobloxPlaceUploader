@@ -60,7 +60,7 @@ Copy-Item .env.example .env
 ```
 
 Never commit the real `.env` file. It is ignored by Git on purpose.
-The script reads `ROBLOSECURITY` from `--cookie`, the environment, or a local `.env` file in that order.
+The script reads `ROBLOSECURITY` from `--cookie`, the environment, or a local `.env` file in that order. If none are present, it exits before any upload attempt.
 
 Use an explicit place ID:
 
