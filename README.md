@@ -73,6 +73,12 @@ List owned games before choosing a target:
 python 11/main.py --list-games
 ```
 
+Validate the target without uploading:
+
+```bash
+python 11/main.py --file Place.rbxl --place-id 123456789 --dry-run
+```
+
 Skip the automatic public visibility update:
 
 ```bash
@@ -87,6 +93,7 @@ python 11/main.py --file Place.rbxl --no-public
 | `--file` | Path to a `.rbxl` or `.rbxlx` file. Defaults to `Place.rbxl`. |
 | `--place-id` | Optional explicit place ID. If omitted, the script selects a place automatically. |
 | `--list-games` | Print owned games with universe and place IDs, then exit without uploading. |
+| `--dry-run` | Validate authentication, file path, and target place without uploading. |
 | `--no-open` | Do not open the result URL in a browser. |
 | `--no-public` | Skip the automatic universe visibility update after upload. |
 | `--timeout` | HTTP timeout in seconds. Defaults to `90`. |
