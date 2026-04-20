@@ -272,6 +272,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--file", type=Path, default=Path("Place.rbxl"), help="Path to .rbxl/.rbxlx")
     parser.add_argument("--place-id", type=int, default=None, help="Optional place ID. If omitted, latest owned game root place is used")
     parser.add_argument("--list-games", action="store_true", help="List owned games and exit without uploading")
+    parser.add_argument("--dry-run", action="store_true", help="Validate auth, file, and target place without uploading")
     parser.add_argument("--no-public", action="store_true", help="Skip the automatic universe visibility update")
     parser.add_argument("--no-open", action="store_true", help="Do not open game link in browser")
     parser.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT_SECONDS)
@@ -310,6 +311,10 @@ def main() -> int:
 
         game = resolve_target_game(cookie_header, csrf_token, args.timeout, args.retries, args.place_id)
         print(f"Target game: {game.name} (universe_id={game.universe_id}, place_id={game.place_id})")
+
+        if args.dry_run:
+            print(f"Dry run complete. File is valid and target place_id={game.place_id} was resolved.")
+            return 0
 
         response_text, rotated_upload_cookie = upload_place_legacy(
             cookie_header,
