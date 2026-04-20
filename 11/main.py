@@ -265,7 +265,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--cookie", type=str, default=None, help="ROBLOSECURITY value (or ROBLOSECURITY env)")
     parser.add_argument("--file", type=Path, default=Path("Place.rbxl"), help="Path to .rbxl/.rbxlx")
     parser.add_argument("--place-id", type=int, default=None, help="Optional place ID. If omitted, latest owned game root place is used")
-    parser.add_argument("--public", action="store_true", default=True, help="Try to set universe public after upload")
+    parser.add_argument("--no-public", action="store_true", help="Skip the automatic universe visibility update")
     parser.add_argument("--no-open", action="store_true", help="Do not open game link in browser")
     parser.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT_SECONDS)
     parser.add_argument("--retries", type=int, default=DEFAULT_RETRIES)
@@ -309,7 +309,7 @@ def main() -> int:
         print("Upload complete.")
         print(f"Server response: {response_text}")
 
-        if args.public:
+        if not args.no_public:
             try:
                 set_universe_public(cookie_header, csrf_token, game.universe_id, args.timeout, args.retries)
                 print("Universe visibility set to public.")
