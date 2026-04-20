@@ -67,6 +67,12 @@ Use an explicit place ID:
 python 11/main.py --file Place.rbxl --place-id 123456789 --no-open
 ```
 
+Skip the automatic public visibility update:
+
+```bash
+python 11/main.py --file Place.rbxl --no-public
+```
+
 ## Options
 
 | Option | Purpose |
@@ -75,6 +81,7 @@ python 11/main.py --file Place.rbxl --place-id 123456789 --no-open
 | `--file` | Path to a `.rbxl` or `.rbxlx` file. Defaults to `Place.rbxl`. |
 | `--place-id` | Optional explicit place ID. If omitted, the script selects a place automatically. |
 | `--no-open` | Do not open the result URL in a browser. |
+| `--no-public` | Skip the automatic universe visibility update after upload. |
 | `--timeout` | HTTP timeout in seconds. Defaults to `90`. |
 | `--retries` | Retry count for temporary HTTP failures. Defaults to `2`. |
 
