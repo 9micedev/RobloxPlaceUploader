@@ -60,6 +60,7 @@ Copy-Item .env.example .env
 ```
 
 Never commit the real `.env` file. It is ignored by Git on purpose.
+The script reads `ROBLOSECURITY` from `--cookie`, the environment, or a local `.env` file in that order.
 
 Use an explicit place ID:
 
@@ -89,7 +90,7 @@ python 11/main.py --file Place.rbxl --no-public
 
 | Option | Purpose |
 | --- | --- |
-| `--cookie` | `.ROBLOSECURITY` value. If omitted, the script reads `ROBLOSECURITY`. |
+| `--cookie` | `.ROBLOSECURITY` value. If omitted, the script reads `ROBLOSECURITY` from the environment or `.env`. |
 | `--file` | Path to a `.rbxl` or `.rbxlx` file. Defaults to `Place.rbxl`. |
 | `--place-id` | Optional explicit place ID. If omitted, the script selects a place automatically. |
 | `--list-games` | Print owned games with universe and place IDs, then exit without uploading. |

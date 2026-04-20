@@ -23,6 +23,7 @@ UNIVERSE_CONFIG_URL_TEMPLATE = "https://develop.roblox.com/v1/universes/{univers
 DEFAULT_TIMEOUT_SECONDS = 90
 DEFAULT_RETRIES = 2
 SUPPORTED_EXTENSIONS = {".rbxl", ".rbxlx"}
+DEFAULT_ENV_FILE = Path(".env")
 
 
 class RobloxUploadError(RuntimeError):
@@ -118,6 +119,20 @@ def extract_cookie_value(raw_cookie: str) -> str:
 
 def build_cookie_header(cookie_value: str) -> str:
     return f".ROBLOSECURITY={cookie_value}"
+
+
+def read_env_file_value(env_path: Path, key: str) -> Optional[str]:
+    if not env_path.exists() or not env_path.is_file():
+        return None
+
+    for raw_line in env_path.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        found_key, raw_value = line.split("=", 1)
+        if found_key.strip() == key:
+            return raw_value.strip().strip("\"'")
+    return None
 
 
 def parse_rotated_cookie(set_cookie: str) -> Optional[str]:
@@ -291,7 +306,7 @@ def main() -> int:
         return 1
 
     try:
-        raw_cookie = args.cookie or os.getenv("ROBLOSECURITY")
+        raw_cookie = args.cookie or os.getenv("ROBLOSECURITY") or read_env_file_value(DEFAULT_ENV_FILE, "ROBLOSECURITY")
         if not raw_cookie:
             print("Error: provide cookie via --cookie or ROBLOSECURITY", file=sys.stderr)
             return 1
