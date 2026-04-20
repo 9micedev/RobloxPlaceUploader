@@ -49,6 +49,18 @@ $env:ROBLOSECURITY = "YOUR_COOKIE_VALUE"
 python 11/main.py --file Place.rbxl
 ```
 
+Or copy the example env file and fill it locally:
+
+```bash
+cp .env.example .env
+```
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Never commit the real `.env` file. It is ignored by Git on purpose.
+
 Use an explicit place ID:
 
 ```bash
@@ -78,18 +90,18 @@ python 11/main.py --file Place.rbxl --place-id 123456789 --no-open
 
 ```txt
 .
-├── 11/main.py       upload script
-├── 11/             sample media/assets
-├── docs/demo.svg   visual project preview
-├── Place.rbxl      sample place file
-├── README.md       project guide
-└── SECURITY.md     security reporting and secret handling
+|-- 11/main.py       upload script
+|-- 11/             sample media/assets
+|-- docs/demo.svg   visual project preview
+|-- .env.example    local environment template
+|-- Place.rbxl      sample place file
+|-- README.md       project guide
+`-- SECURITY.md     security reporting and secret handling
 ```
 
 ## Roadmap
 
 - Add Open Cloud Place Publishing API support.
-- Add `.env.example` for safer local setup.
 - Add dry-run validation for file paths and target place IDs.
 - Split API helpers into testable modules.
 - Add screenshots or short clips when a stable demo flow is available.
