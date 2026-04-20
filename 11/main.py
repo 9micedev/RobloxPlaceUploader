@@ -308,7 +308,7 @@ def main() -> int:
     try:
         raw_cookie = args.cookie or os.getenv("ROBLOSECURITY") or read_env_file_value(DEFAULT_ENV_FILE, "ROBLOSECURITY")
         if not raw_cookie:
-            print("Error: provide cookie via --cookie or ROBLOSECURITY", file=sys.stderr)
+            print("Error: provide cookie via --cookie, ROBLOSECURITY, or a local .env file", file=sys.stderr)
             return 1
 
         cookie_header = build_cookie_header(extract_cookie_value(raw_cookie))
