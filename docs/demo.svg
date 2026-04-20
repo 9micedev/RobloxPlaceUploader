@@ -1,0 +1,42 @@
+<svg width="1200" height="520" viewBox="0 0 1200 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1200" y1="0" y2="520" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#020617"/>
+      <stop offset="0.48" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#052e2b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="158" x2="1040" y1="118" y2="380" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#22c55e"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.13 0 0 0 0 0.77 0 0 0 0 0.9 0 0 0 0.35 0"/>
+      <feBlend in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="520" rx="34" fill="url(#bg)"/>
+  <circle cx="1010" cy="96" r="210" fill="#22c55e" opacity="0.08"/>
+  <circle cx="190" cy="430" r="250" fill="#38bdf8" opacity="0.08"/>
+  <path d="M94 402C245 290 339 326 464 252C597 174 670 101 820 146C913 174 979 253 1105 198" stroke="url(#accent)" stroke-width="4" opacity="0.45"/>
+
+  <g filter="url(#glow)">
+    <rect x="90" y="86" width="1020" height="348" rx="26" fill="#0f172a" stroke="#1e293b" stroke-width="2"/>
+  </g>
+  <rect x="116" y="112" width="968" height="56" rx="16" fill="#111827"/>
+  <circle cx="146" cy="140" r="7" fill="#ef4444"/>
+  <circle cx="170" cy="140" r="7" fill="#f59e0b"/>
+  <circle cx="194" cy="140" r="7" fill="#22c55e"/>
+  <text x="232" y="146" fill="#94a3b8" font-family="JetBrains Mono, Consolas, monospace" font-size="18">roblox-place-uploader</text>
+
+  <text x="138" y="226" fill="#e5e7eb" font-family="JetBrains Mono, Consolas, monospace" font-size="24">$ export ROBLOSECURITY="••••••"</text>
+  <text x="138" y="270" fill="#38bdf8" font-family="JetBrains Mono, Consolas, monospace" font-size="24">$ python 11/main.py --file Place.rbxl</text>
+  <text x="138" y="320" fill="#22c55e" font-family="JetBrains Mono, Consolas, monospace" font-size="22">✓ CSRF token received</text>
+  <text x="138" y="356" fill="#22c55e" font-family="JetBrains Mono, Consolas, monospace" font-size="22">✓ Place uploaded successfully</text>
+  <text x="138" y="392" fill="#94a3b8" font-family="JetBrains Mono, Consolas, monospace" font-size="20">https://www.roblox.com/games/&lt;place-id&gt;</text>
+
+  <rect x="820" y="214" width="214" height="120" rx="22" fill="#020617" stroke="#1e293b"/>
+  <text x="856" y="264" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">RBXL</text>
+  <text x="856" y="298" fill="#38bdf8" font-family="Inter, Arial, sans-serif" font-size="18">upload flow</text>
+  <path d="M985 253L1005 273L985 293" stroke="#22c55e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
